@@ -12,7 +12,6 @@ namespace ConsoleUI
             ProductTest();
             //CategoryTest();
         }
-
         private static void CategoryTest()
         {
             CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
@@ -21,7 +20,6 @@ namespace ConsoleUI
                 Console.WriteLine("Kategori adı: {0}", item.CategoryName);
             }
         }
-
         private static void ProductTest()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());

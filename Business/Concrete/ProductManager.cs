@@ -12,10 +12,14 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-
         public ProductManager(IProductDal productDal)
         {
             _productDal = productDal;
+        }
+
+        public void Add(Product product)
+        {
+            _productDal.Add(product);
         }
 
         public List<Product> GetAll()
@@ -26,17 +30,14 @@ namespace Business.Concrete
             return _productDal.GetAll();
             
         }
-
         public List<Product> GetByProductId(int id)
         {
             return _productDal.GetAll(p => p.ProductId == id);
         }
-
         public List<Product> GetByUnitPrice(decimal min, decimal max)
         {
             return _productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max);
         }
-
         public List<ProductDetailDto> getProductDetailsDto()
         {
             return _productDal.GetProductDetails();
