@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Entities.Abstract
+namespace Core.Entities
 {
     //IEntity'i implement eden classlar bir nesnedir.
     public interface IEntity
