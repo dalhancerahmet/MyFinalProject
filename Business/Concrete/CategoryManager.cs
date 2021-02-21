@@ -23,7 +23,7 @@ namespace Business.Concrete
 
         public Category GetById(int categoryId)
         {
-           return _categoryDal.getT(c => c.CategoryId == categoryId);
+           return _categoryDal.get(c => c.CategoryId == categoryId);
         }
     }
 }

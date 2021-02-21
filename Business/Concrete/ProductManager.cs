@@ -1,10 +1,14 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,26 +22,22 @@ namespace Business.Concrete
         {
             _productDal = productDal;
         }
-
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            //if (product.ProductName.Length < 2)
-            //{
-            //    return ErrorResult("Ürün adı uzunluğu 2 karekterden daha fazla olmalıdır.");
-            //}
+            //iş kodları gelecek
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
-
         public IDataResult<List<Product>> GetAll()
         {
             //iş kodları
             //yetkisi var mı
             //similasyondan geçerse ürünleri dönderiyor.
-            if (DateTime.Now.Hour==22)
-            {
-                return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);//MaintenanceTime= Bakım zamanı
-            }
+            //if (DateTime.Now.Hour==22)
+            //{
+            //    return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);//MaintenanceTime= Bakım zamanı
+            //}
             return new SuccessDataResult<List<Product>>( _productDal.GetAll(),Messages.ProductsListed);
             
         }
@@ -47,7 +47,7 @@ namespace Business.Concrete
         }
         public IDataResult<Product> GetById(int productId)
         {
-            return new SuccessDataResult<Product>( _productDal.getT(p => p.ProductId == productId));
+            return new SuccessDataResult<Product>( _productDal.get(p => p.ProductId == productId));
         }
 
         public IDataResult<List<Product>> GetByProductId(int id)
