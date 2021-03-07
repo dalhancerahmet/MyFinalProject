@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -27,6 +28,7 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
+        [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
@@ -56,7 +58,7 @@ namespace Business.Concrete
         }
         public IDataResult<Product> GetById(int productId)
         {
-            return new SuccessDataResult<Product>( _productDal.get(p => p.ProductId == productId));
+            return new SuccessDataResult<Product>( _productDal.Get(p => p.ProductId == productId));
         }
 
         public IDataResult<List<Product>> GetByProductId(int id)
